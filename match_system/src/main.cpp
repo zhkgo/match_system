@@ -45,7 +45,9 @@ class Pool{
 
             try {
                 transport->open();
-                client.save_data("acs_3693","8ffd6ab3",a,b);
+                int res=client.save_data("acs_3693","8ffd6ab3",a,b);
+                if(!res)puts("success");
+                else puts("failed");
                 transport->close();
             } catch (TException& tx) {
                 cout << "ERROR: " << tx.what() << endl;
@@ -126,7 +128,7 @@ int main(int argc, char **argv) {
     ::std::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
     ::std::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
     ::std::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
-    std::cout<< "start server"<<std::endl;
+    std::cout<< "Start Match Server"<<std::endl;
     TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
     thread matching_thread(consume_task);
     server.serve();
